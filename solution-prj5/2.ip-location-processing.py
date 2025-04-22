@@ -3,26 +3,27 @@ import logging
 from pymongo import MongoClient, errors
 import IP2Location
 
-# ====== Logging Setup ======
-os.makedirs('logs', exist_ok=True)
+# Logger
+os.makedirs("logs", exist_ok=True)
 
 logging.basicConfig(
-    filename='logs/ip_process.log',
+    filename="logs/ip_process.log",
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
-# ====== Load IP2Location Database ======
+# Load ip2location db
 try:
     db_path = "ip2loc/IP2LOCATION-LITE-DB1.BIN"
     ip2loc = IP2Location.IP2Location(db_path)
-    logger.info("✅ IP2Location DB loaded successfully.")
+    logger.info("IP2Location DB loaded successfully.")
 except ValueError as e:
-    logger.error(f"❌ Failed to load IP2Location DB: {e}")
+    logger.error(f"Failed to load IP2Location DB: {e}")
     raise
 
-# ====== Process all pending IPs in batches ======
+
+# Process all pending IPs in batches
 def enrich_ip_locations(batch_size=5000):
     try:
         client = MongoClient("mongodb://localhost:27017")
@@ -31,7 +32,9 @@ def enrich_ip_locations(batch_size=5000):
 
         # Fetch all pending IPs
         cursor = ip_col.find({"status": "pending"}, {"ip": 1})
-        total_ips = ip_col.count_documents({"status": "pending"})  # Use count_documents instead of cursor.count()
+        total_ips = ip_col.count_documents(
+            {"status": "pending"}
+        )  # Use count_documents instead of cursor.count()
         batch = []
         total_processed = 0
         total_failed = 0
@@ -52,13 +55,16 @@ def enrich_ip_locations(batch_size=5000):
             total_failed += failed
             logger.info(f"Progress: {total_processed}/{total_ips} IPs processed.")
 
-        logger.info(f"🏁 Enrichment completed. Total processed: {total_processed}, Failed: {total_failed}")
+        logger.info(
+            f"Enrichment completed. Total processed: {total_processed}, Failed: {total_failed}"
+        )
 
     except errors.ConnectionFailure as e:
-        logger.error(f"❌ MongoDB connection error: {e}")
+        logger.error(f"MongoDB connection error: {e}")
     except Exception as e:
-        logger.error(f"❌ Unexpected error: {e}")
-        
+        logger.error(f"Unexpected error: {e}")
+
+
 def process_batch(batch, ip_col):
     processed = 0
     failed = 0
@@ -69,20 +75,22 @@ def process_batch(batch, ip_col):
             update = {
                 "location": {
                     "country_code": record.country_short,
-                    "country_name": record.country_long
+                    "country_name": record.country_long,
                 },
-                "status": "done"
+                "status": "done",
             }
             ip_col.update_one({"_id": ip_doc["_id"]}, {"$set": update})
             processed += 1
         except Exception as e:
-            logger.error(f"❌ Failed to enrich IP {ip}: {e}")
+            logger.error(f"Failed to enrich IP {ip}: {e}")
             ip_col.update_one({"_id": ip_doc["_id"]}, {"$set": {"status": "error"}})
             failed += 1
 
-    logger.info(f"✅ Processed batch of {len(batch)}. Success: {processed}, Failed: {failed}")
+    logger.info(
+        f"Processed batch of {len(batch)}. Success: {processed}, Failed: {failed}"
+    )
     return processed, failed
 
-# ====== Entry Point ======
+
 if __name__ == "__main__":
     enrich_ip_locations()

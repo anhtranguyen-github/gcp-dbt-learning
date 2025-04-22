@@ -1,13 +1,13 @@
 #!/bin/bash
 
-set -e  # Stop script on error
+set -e  
 
 FILE_NAME="glamira_ubl_oct2019_nov2019.tar.gz"
 GCS_PATH="gs://raw-glamira-dec/$FILE_NAME"
 LOCAL_DUMP_DIR="dump/countly"
 MONGO_DB_NAME="countly"
 
-# Step 1: Check if file already exists
+# Check if file already exists
 if [ -f "$FILE_NAME" ]; then
     echo " File '$FILE_NAME' already exists. Skipping download."
 else
@@ -20,7 +20,7 @@ else
     fi
 fi
 
-# Step 2: Extract tar.gz
+# Extract tar.gz
 echo " Extracting $FILE_NAME..."
 if tar -xzvf "$FILE_NAME"; then
     echo " Extraction completed."
@@ -29,7 +29,7 @@ else
     exit 1
 fi
 
-# Step 3: Import into MongoDB
+# Import into MongoDB
 echo "🛢️ Importing data into MongoDB..."
 if [ -d "$LOCAL_DUMP_DIR" ]; then
     if mongorestore --db "$MONGO_DB_NAME" "$LOCAL_DUMP_DIR"; then

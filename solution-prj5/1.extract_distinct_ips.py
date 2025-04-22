@@ -1,47 +1,39 @@
 import logging
+import os
 from pymongo import MongoClient
 
-# ======== Logger Setup =========
+# Logger
+os.makedirs("logs", exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler("logs/extract_ips.log"),
-        logging.StreamHandler()
-    ]
+    handlers=[logging.FileHandler("logs/extract_ips.log"), logging.StreamHandler()],
 )
 logger = logging.getLogger(__name__)
 
-# ======== MongoDB Setup =========
+# MongoDB Setup
 client = MongoClient("mongodb://localhost:27017")
 db = client["countly"]
 summary_col = db["summary"]
 ip_col = db["distinct_ips"]
 
-# ======== Clear old data (optional) ========
+# Clear old data
 ip_col.drop()
 logger.info("Dropped old 'distinct_ips' collection if it existed.")
 
-# ======== Aggregation Pipeline =========
+# Aggregation Pipeline
 pipeline = [
-    {
-        "$match": {
-            "ip": { "$exists": True, "$ne": None, "$ne": "" }
-        }
-    },
-    {
-        "$group": {
-            "_id": "$ip"
-        }
-    },
+    {"$match": {"ip": {"$exists": True, "$ne": None, "$ne": ""}}},
+    {"$group": {"_id": "$ip"}},
     {
         "$project": {
             "_id": 0,
             "ip": "$_id",
-            "location": None,   # For future enrichment
-            "status": "pending" # Optional status field to mark enrichment state
+            "location": None,  # Use later on step 2
+            "status": "pending",  # get location from IP State
         }
-    }
+    },
 ]
 
 logger.info("Starting aggregation to extract distinct IPs...")
@@ -65,4 +57,4 @@ if batch:
     count += len(batch)
     logger.info(f"Inserted final batch. Total inserted: {count}")
 
-logger.info("✅ Done extracting distinct IPs.")
+logger.info("Done extracting distinct IPs.")
