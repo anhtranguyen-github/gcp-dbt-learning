@@ -2,9 +2,7 @@ import csv
 from pymongo import MongoClient
 
 
-client = MongoClient(
-    "mongodb://localhost:27017/"
-)  # Replace with your actual MongoDB URI
+client = MongoClient("mongodb://localhost:27017/")
 db = client["countly"]
 collection = db["product_names"]
 

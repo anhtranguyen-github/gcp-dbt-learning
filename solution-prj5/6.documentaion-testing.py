@@ -3,7 +3,7 @@ import os
 import sys
 from pymongo import MongoClient
 
-# Logger setup (reusing log configuration from 6.documentaion-testing.py)
+# Logger
 os.makedirs("logs", exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
@@ -18,9 +18,8 @@ logger = logging.getLogger(__name__)
 
 def profile_collection(db, collection_name):
     collection = db[collection_name]
-    results = []  # Collect output messages
+    results = []
 
-    # Total document count
     total_docs = collection.count_documents({})
     msg = f"Collection '{collection_name}' has {total_docs} documents."
     logger.info(msg)
@@ -64,10 +63,9 @@ def profile_collection(db, collection_name):
 
 if __name__ == "__main__":
     try:
-        client = MongoClient()  # Adjust connection parameters if necessary
+        client = MongoClient()
         db = client["countly"]
 
-        # List the collections to profile. You can add 'summary' or others if needed.
         collections_to_profile = ["product_names", "distinct_ips"]
         all_results = []
         for coll in collections_to_profile:
