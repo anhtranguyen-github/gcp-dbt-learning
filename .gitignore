@@ -79,10 +79,10 @@ ivy/
 ivy.jar 
 
 *logs*
-*test*
+test*
 solution-prj5/data/
-*csv*
-*ip2loc*
+*csv/
+*ip2loc/
 *old*
 dump/
 *.tar.gz

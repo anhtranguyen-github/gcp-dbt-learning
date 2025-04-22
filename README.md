@@ -4,7 +4,7 @@ This project includes multiple solution projects. Below are the setup instructio
 
 ## Solution Project 5 Setup
 
-Solution Project 5 contains several scripts responsible for importing data, processing IP addresses, and managing product names. Follow these steps to set up and run the project:
+Solution Project 5 contains several scripts responsible for importing data, processing IP addresses, profiling data, and managing product names. Follow these steps to set up and run the project:
 
 1. **Prerequisites**:
    - Ensure you have Python 3 installed.
@@ -59,6 +59,15 @@ Solution Project 5 contains several scripts responsible for importing data, proc
      - Finally, export the collected product names to a CSV file by running the 5.save-product-names-to-csv.py script:
        ```sh
        python 5.save-product-names-to-csv.py
+       ```
+   - **Data Profiling**:
+     - Run the 6.documentaion-testing.py script to perform data profiling on your collections. This script collects metrics such as document counts, distinct field values, null/empty counts, and status distributions.
+       ```sh
+       python 6.documentaion-testing.py
+       ```
+     - The profiling output will be saved to:
+       ```
+       logs/data_profiling_output.txt
        ```
 
 4. **Logs**:

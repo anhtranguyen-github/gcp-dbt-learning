@@ -20,7 +20,7 @@ DB_NAME = "countly"
 COLLECTIONS = ["distinct_ips", "product_names", "summary"]
 EXPORT_PATH = "./data"
 BATCH_SIZE = 100
-GCS_BUCKET_NAME = "your-gcs-bucket-name"  # <-- Replace with actual GCS bucket name
+GCS_BUCKET_NAME = "dec-project-bucket"  # <-- Replace with actual GCS bucket name
 
 # --- Mongo Connection ---
 def connect_mongo():
@@ -108,7 +108,7 @@ def export_to_gcs(test_mode=True, sample_size=10, upload_mode=False):
 # --- Run (sample test mode) ---
 if __name__ == "__main__":
     # Export test data only (10 records), don't upload to GCS
-    export_to_gcs(test_mode=True, sample_size=10, upload_mode=False)
+    export_to_gcs(test_mode=True, sample_size=10, upload_mode=True)
 
     # 👇 For full export + GCS upload:
     # export_to_gcs(test_mode=False, upload_mode=True)

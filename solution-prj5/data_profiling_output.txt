@@ -1,0 +1,15 @@
+Collection 'product_names' has 19417 documents.
+Field 'product_name' in 'product_names': 17557 distinct values, 1708 null/empty values.
+Field 'status' in 'product_names': 2 distinct values, 0 null/empty values.
+Field '_id' in 'product_names': 19417 distinct values, 0 null/empty values.
+Field 'product_id' in 'product_names': 19417 distinct values, 0 null/empty values.
+Field 'current_url' in 'product_names': 19417 distinct values, 0 null/empty values.
+Field 'retry_count' in 'product_names': 1 distinct values, 0 null/empty values.
+Status 'processed' in 'product_names': 17709 documents.
+Status 'failed' in 'product_names': 1708 documents.
+Collection 'distinct_ips' has 3239628 documents.
+Field 'ip' in 'distinct_ips': 3239628 distinct values, 0 null/empty values.
+Field 'status' in 'distinct_ips': 1 distinct values, 0 null/empty values.
+Field '_id' in 'distinct_ips': 3239628 distinct values, 0 null/empty values.
+Field 'location' in 'distinct_ips': 226 distinct values, 0 null/empty values.
+Status 'done' in 'distinct_ips': 3239628 documents.
