@@ -1,10 +1,8 @@
 # gcp-dbt-learning
 
-This project includes multiple solution projects. Below are the setup instructions for **Solution Project 5**.
+**Solution Project 5**.
 
 ## Solution Project 5 Setup
-
-Solution Project 5 contains several scripts responsible for importing data, processing IP addresses, profiling data, and managing product names. Follow these steps to set up and run the project:
 
 1. **Prerequisites**:
    - Ensure you have Python 3 installed.
@@ -63,17 +61,14 @@ Solution Project 5 contains several scripts responsible for importing data, proc
    - **Data Profiling**:
      - Run the 6.documentaion-testing.py script to perform data profiling on your collections. This script collects metrics such as document counts, distinct field values, null/empty counts, and status distributions.
        ```sh
-       python 6.documentaion-testing.py
+       python 6.data-profiling.py
        ```
      - The profiling output will be saved to:
        ```
-       logs/data_profiling_output.txt
+       data_profiling_output.txt
        ```
 
 4. **Logs**:
-   - All scripts generate logs in the logs/ directory. Check these logs for details and troubleshooting if needed.
 
-5. **Additional Notes**:
-   - Adjust configurations (e.g., MongoDB URI, file paths, or GCS bucket names) within each script as necessary for your environment.
 
 
