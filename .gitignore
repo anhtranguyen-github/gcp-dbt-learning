@@ -86,3 +86,4 @@ ivy.jar
 *old*
 dump/
 *.tar.gz
+*venv*
