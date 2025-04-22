@@ -21,39 +21,44 @@ Solution Project 5 contains several scripts responsible for importing data, proc
      ```
 
 3. **Solution Project 5 Scripts**:
+   - **Change Directory**:
+     - Before running any scripts, change your working directory to the solution project folder:
+       ```sh
+       cd solution-prj5
+       ```
    - **Install IP2Location Database**:
      - Execute the 0.install-ip2loc.sh script to download and install the IP2Location database:
        ```sh
-       bash solution-prj5/0.install-ip2loc.sh
+       bash 0.install-ip2loc.sh
        ```
    - **Extract Distinct IPs**:
      - Run the 1.extract_distinct_ips.py script to aggregate and extract distinct IP addresses from the `summary` collection:
        ```sh
-       python solution-prj5/1.extract_distinct_ips.py
+       python 1.extract_distinct_ips.py
        ```
    - **Enrich IP Locations**:
      - Execute the 2.ip-location-processing.py script to enrich the extracted IP addresses using the IP2Location database:
        ```sh
-       python solution-prj5/2.ip-location-processing.py
+       python 2.ip-location-processing.py
        ```
    - **Initialize Product Names Collection**:
      - Run the 3.product-name-collection-init.py script to create and populate the `product_names` collection:
        ```sh
-       python solution-prj5/3.product-name-collection-init.py
+       python 3.product-name-collection-init.py
        ```
    - **Crawl Product Names**:
      - Execute the 4.crawl-product-name.py script to scrape product names from URLs and update the MongoDB collection.
      - If some entries fail to fetch, use 4.1.failed-handle.py to analyze and diagnose the failed records:
        ```sh
-       python solution-prj5/4.crawl-product-name.py
+       python 4.crawl-product-name.py
        ```
        ```sh
-       python solution-prj5/4.1.failed-handle.py
+       python 4.1.failed-handle.py
        ```
    - **Save Product Names to CSV**:
      - Finally, export the collected product names to a CSV file by running the 5.save-product-names-to-csv.py script:
        ```sh
-       python solution-prj5/5.save-product-names-to-csv.py
+       python 5.save-product-names-to-csv.py
        ```
 
 4. **Logs**:
